@@ -1,10 +1,10 @@
 import { Table, Model, Column, DataType } from 'sequelize-typescript';
 
 @Table({
-    tableName: 'stations',
+    tableName: 'journeys',
     timestamps: false,
 })
-export class Station extends Model {
+export class Journey extends Model {
 
     @Column({
         type: DataType.INTEGER,
@@ -12,48 +12,42 @@ export class Station extends Model {
         autoIncrement: true,
         allowNull: false,
     })
-    FID!: number;
+    JID!: number;
+
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
+    departure_time!: Date;
+
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
+    return_time!: Date;
 
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    id!: number;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    name!: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-    })
-    address!: string;
-
-    @Column({
-        type: DataType.STRING,
-        allowNull: true,
-    })
-    city: string;
+    departure_station_id!: number;
 
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    capasity!: number;
+    return_station_id!: number;
 
     @Column({
-        type: DataType.FLOAT,
+        type: DataType.INTEGER,
         allowNull: false,
     })
-    x!: number;
+    distance!: number;
 
     @Column({
-        type: DataType.FLOAT,
+        type: DataType.INTEGER,
         allowNull: false,
     })
-    y!: number;
+    duration!: number;
 
 }

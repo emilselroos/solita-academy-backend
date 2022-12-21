@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { Station } from './models/station.model.js';
+import { Journey } from './models/journey.model.js';
 
 const DB_NAME = process.env.DB_NAME as string;
 const DB_USER = process.env.DB_USER as string;
@@ -17,7 +18,7 @@ const connection = new Sequelize({
     username: DB_USER,
     password: DB_PASSWORD,
     // Models
-    models: [ Station ],
+    models: [ Station, Journey ],
     // Settings
     logging: false,
 });
