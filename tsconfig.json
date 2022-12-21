@@ -31,7 +31,9 @@
         "noImplicitReturns": true,
         "noUncheckedIndexedAccess": true, // accessing index must always check for undefined
         "noUnusedLocals": false, // Report errors on unused local variables.
-        "noUnusedParameters": false // Report errors on unused parameters in functions
+        "noUnusedParameters": false, // Report errors on unused parameters in functions
+
+        "experimentalDecorators": true
     },
     "include": ["./**/*.ts"],
     "exclude": [
