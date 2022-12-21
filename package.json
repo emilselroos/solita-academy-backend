@@ -1,0 +1,33 @@
+{
+  "name": "solita-academy-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node lib/app.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q lib/app.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emilselroos/solita-academy-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emilselroos/solita-academy-backend/issues"
+  },
+  "homepage": "https://github.com/emilselroos/solita-academy-backend#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.15",
+    "@types/node": "^18.11.17",
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.9.4"
+  }
+}
