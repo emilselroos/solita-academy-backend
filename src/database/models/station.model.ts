@@ -12,13 +12,7 @@ export class Station extends Model {
         autoIncrement: true,
         allowNull: false,
     })
-    FID!: number;
-
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-    })
-    id!: number;
+    SID!: number;
 
     @Column({
         type: DataType.STRING,

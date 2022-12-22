@@ -1,4 +1,5 @@
-import { Table, Model, Column, DataType } from 'sequelize-typescript';
+import { Table, Model, Column, DataType, BelongsTo } from 'sequelize-typescript';
+import { Station } from './station.model.js';
 
 @Table({
     tableName: 'journeys',
@@ -49,5 +50,13 @@ export class Journey extends Model {
         allowNull: false,
     })
     duration!: number;
+
+    // Relations
+
+    @BelongsTo(() => Station, 'departure_station_id')
+    departure_station: Station;
+
+    @BelongsTo(() => Station, 'return_station_id')
+    return_station: Station;
 
 }
