@@ -5,7 +5,7 @@ import helmet from 'helmet';
 dotenv.config();
 
 import connection from './database/connection.js';
-import { stationsRouter } from './routes/index.js';
+import { stationsRouter, journeysRouter } from './routes/index.js';
 
 const app: Express = express();
 const PORT = process.env.PORT;
@@ -18,6 +18,7 @@ app.get('/test', (req: Request, res: Response) => {
 });
 
 app.use('/stations', stationsRouter);
+app.use('/journeys', journeysRouter);
 
 const start = async () => {
     try {
