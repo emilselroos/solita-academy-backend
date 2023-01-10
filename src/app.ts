@@ -8,8 +8,8 @@ import connection from './database/connection.js';
 const app: Express = express();
 const PORT = process.env.PORT;
 
-app.get('/', (req: Request, res: Response) => {
-    res.send(`OK!`);
+app.get('/test', (req: Request, res: Response) => {
+    res.status(200).send(`OK!`);
 });
 
 const start = async () => {
