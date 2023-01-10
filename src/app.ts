@@ -1,16 +1,23 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
 
 dotenv.config();
 
 import connection from './database/connection.js';
+import { stationsRouter } from './routes/index.js';
 
 const app: Express = express();
 const PORT = process.env.PORT;
 
+app.use(helmet());
+app.use(express.json());
+
 app.get('/test', (req: Request, res: Response) => {
     res.status(200).send(`OK!`);
 });
+
+app.use('/stations', stationsRouter);
 
 const start = async () => {
     try {
