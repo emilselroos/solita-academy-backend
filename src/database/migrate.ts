@@ -125,9 +125,9 @@ const fetchJourneys = async () => {
 				})
 				.on('end', async () => {
 					try {
-						// Due to large size of our datasets, we faced some memory issues
+						// Due to large size of our datasets, we faced some memory issues.
 						// Let's use chunks to insert data in smaller batches (apparently Sequelize ORM
-						// doesn't support that function anymore - that's why lodash)
+						// doesn't support that function anymore - that's why lodash).
 						const chunks = _.chunk(records, 1000);
 						for (const chunk of chunks) {
 							await Journey?.bulkCreate(chunk);
