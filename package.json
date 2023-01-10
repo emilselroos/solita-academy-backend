@@ -7,6 +7,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node lib/app.js",
+    "migrate:datasets": "node lib/database/migrate.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q lib/app.js\""
   },
   "repository": {
@@ -20,10 +21,12 @@
   },
   "homepage": "https://github.com/emilselroos/solita-academy-backend#readme",
   "dependencies": {
+    "csv-parser": "^3.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
+    "reflect-metadata": "^0.1.13",
     "sequelize": "^6.28.0",
     "sequelize-typescript": "^2.1.5"
   },

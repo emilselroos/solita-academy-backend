@@ -14,7 +14,9 @@ app.get('/', (req: Request, res: Response) => {
 
 const start = async () => {
     try {
-        await connection.authenticate();
+        await connection.authenticate().catch((error) => {
+            console.log(`[City Bike Server] Sequelize Authentication Error: `, error);
+        });
         await connection.sync();
         console.log(`[City Bike Server] Database connection has been established successfully.`);
         app.listen(PORT, async () => {

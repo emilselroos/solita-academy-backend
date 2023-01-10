@@ -21,6 +21,12 @@ const connection = new Sequelize({
     models: [ Station, Journey ],
     // Settings
     logging: false,
+    pool: {
+        max: 10,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    }
 });
 
 export default connection;

@@ -40,13 +40,13 @@ export class Journey extends Model {
     return_station_id!: number;
 
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.FLOAT,
         allowNull: false,
     })
     distance!: number;
 
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.FLOAT,
         allowNull: false,
     })
     duration!: number;
