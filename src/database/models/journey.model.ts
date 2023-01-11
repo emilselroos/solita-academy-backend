@@ -18,12 +18,30 @@ export class Journey extends Model {
     @Column({
         type: DataType.DATE,
         allowNull: false,
+		validate: {
+			notNull: {
+				msg: `Departure time can't be null.`
+			},
+			isDate: {
+				msg: `Departure Time has to be date.`,
+				args: true
+			}
+		}
     })
     departure_time!: Date;
 
     @Column({
         type: DataType.DATE,
         allowNull: false,
+		validate: {
+			notNull: {
+				msg: `Return time can't be null.`
+			},
+			isDate: {
+				msg: `Return Time has to be date.`,
+				args: true
+			}
+		}
     })
     return_time!: Date;
 
@@ -34,6 +52,15 @@ export class Journey extends Model {
             model: 'stations',
             key: 'station_number'
         },
+		validate: {
+			notNull: {
+				msg: `You have to set a proper station number for departure station.`
+			},
+			isInt: {
+				msg: `Station number must be a number!`,
+				args: true
+			}
+		}
     })
     departure_station_id!: number;
 
@@ -44,18 +71,37 @@ export class Journey extends Model {
             model: 'stations',
             key: 'station_number'
         },
+		validate: {
+			notNull: {
+				msg: `You have to set a proper station number for return station.`
+			},
+			isInt: {
+				msg: `Station number must be a number!`,
+				args: true
+			}
+		}
     })
     return_station_id!: number;
 
     @Column({
         type: DataType.FLOAT,
         allowNull: false,
+		validate: {
+			notNull: {
+				msg: `Distance can't be null.`
+			}
+		}
     })
     distance!: number;
 
     @Column({
         type: DataType.FLOAT,
         allowNull: false,
+		validate: {
+			notNull: {
+				msg: `Duration can't be null.`
+			}
+		}
     })
     duration!: number;
 

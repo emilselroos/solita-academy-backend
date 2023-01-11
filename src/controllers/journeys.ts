@@ -1,3 +1,4 @@
+import { ValidationError } from 'sequelize';
 import { Request, Response, NextFunction } from 'express';
 import connection from '../database/connection.js';
 const { Journey } = connection.models;
@@ -17,19 +18,24 @@ interface IJourney {
 */
 const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
 	try {
+
 		// @TODO: replace hard limit with backend pagination
 		let journeys: IJourney[] = await Journey?.findAll({ limit: 500 });
 		return res.status(200).json({
 			data: journeys,
 		});
+
 	} catch (error) {
+
 		console.error(error);
 		res.status(500).json({
 			data: null,
 			error: {
-				message: "Something went wrong."
+				message: "Something went wrong, and we don't know what exactly."
 			}
 		});
+
+
 	}
 }
 
@@ -38,6 +44,7 @@ const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
 */
 const getJourney = async (req: Request, res: Response, next: NextFunction) => {
 	try {
+
 		let id: string = req.params.id;
 		let journey: IJourney = await Journey?.findOne({
 			where: {
@@ -47,14 +54,17 @@ const getJourney = async (req: Request, res: Response, next: NextFunction) => {
 		return res.status(200).json({
 			data: journey,
 		});
+
 	} catch (error) {
+
 		console.error(error);
 		res.status(500).json({
 			data: null,
 			error: {
-				message: "Something went wrong."
+				message: "Something went wrong, and we don't know what exactly."
 			}
 		});
+
 	}
 }
 
@@ -63,19 +73,32 @@ const getJourney = async (req: Request, res: Response, next: NextFunction) => {
 */
 const createJourney = async (req: Request, res: Response, next: NextFunction) => {
 	try {
+
 		let data = req.body;
 		let newJourney: IJourney = await Journey?.create(data);
 		res.status(200).json({
 			data: newJourney,
 		});
+
 	} catch (error) {
-		console.error(error);
-		res.status(500).json({
-			data: null,
-			error: {
-				message: "Something went wrong."
-			}
-		});
+
+		if (error instanceof ValidationError) {
+			res.status(500).json({
+				data: null,
+				error: {
+					message: error?.errors[0]?.message
+				}
+			});
+		} else {
+			console.error(error);
+			res.status(500).json({
+				data: null,
+				error: {
+					message: "Something went wrong, and we don't know what exactly."
+				}
+			});
+		}
+
 	}
 }
 
