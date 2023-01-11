@@ -9,6 +9,7 @@ To run this project you should meet following prerequisites:
 - [NPM](https://www.npmjs.com/) (v8.19.3)
 - [Node.js](https://nodejs.org/en/) (v18.13.0)
 - [PostgreSQL](https://www.postgresql.org/) (?)
+- Basic knowledge of ``cmd`` usage
 
 You can speed up your testing process with my pre-made Postman collection.
 
