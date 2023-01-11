@@ -48,7 +48,7 @@ export class Station extends Model {
 		validate: {
 			notNull: {
 				msg: `Station must have an address!`
-			}
+			},
 			len: {
 				msg: `Station address has to be 3 - 240 characters long.`,
 				args: [ 3, 240 ]
