@@ -10,7 +10,7 @@ To run this project you should meet following prerequisites:
 - [Node.js](https://nodejs.org/en/) (v18.13.0)
 - [PostgreSQL](https://www.postgresql.org/) (?)
 
-You can speed up your testing process with my ready Postman collection.
+You can speed up your testing process with my pre-made Postman collection.
 
 [Postman Collection for this project's REST API](https://lunar-flare-127862.postman.co/workspace/New-Team-Workspace~88c5da53-2423-418f-b34d-f736dc92a995/collection/5869225-5df65a67-1d14-4527-8f74-e8615a9e2a4e?action=share&creator=5869225)
 
