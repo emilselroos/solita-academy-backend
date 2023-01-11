@@ -108,12 +108,14 @@ export class Journey extends Model {
     // Relations
 
     @BelongsTo(() => Station,  {
+		as: 'departure_station',
 		foreignKey: 'departure_station_id',
 		onDelete: 'CASCADE'
 	})
     departure_station: Station;
 
     @BelongsTo(() => Station, {
+		as: 'return_station',
 		foreignKey: 'return_station_id',
 		onDelete: 'CASCADE'
 	})

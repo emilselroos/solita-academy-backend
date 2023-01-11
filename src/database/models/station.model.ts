@@ -111,12 +111,14 @@ export class Station extends Model {
 	// Relations
 
 	@HasMany(() => Journey,  {
+		as: 'departure_journeys',
 		foreignKey: 'departure_station_id',
 		onDelete: 'CASCADE'
 	})
     departure_journeys: Journey[];
 
     @HasMany(() => Journey, {
+		as: 'return_journeys',
 		foreignKey: 'return_station_id',
 		onDelete: 'CASCADE'
 	})

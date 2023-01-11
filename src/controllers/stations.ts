@@ -1,7 +1,7 @@
 import { ValidationError } from 'sequelize';
 import { Request, Response, NextFunction } from 'express';
 import connection from '../database/connection.js';
-const { Station } = connection.models;
+const { Station, Journey } = connection.models;
 
 interface IStation {
 	SID: number,
@@ -48,7 +48,19 @@ const getStation = async (req: Request, res: Response, next: NextFunction) => {
 		let station: IStation = await Station?.findOne({
 			where: {
 				SID: id,
-			}
+			},
+			include: [
+				{
+					as: 'departure_journeys',
+					model: Journey,
+					limit: 10,
+				},
+				{
+					as: 'return_journeys',
+					model: Journey,
+					limit: 10,
+				}
+			]
 		});
 		return res.status(200).json({
 			data: station,

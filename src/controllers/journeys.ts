@@ -1,7 +1,7 @@
 import { ValidationError } from 'sequelize';
 import { Request, Response, NextFunction } from 'express';
 import connection from '../database/connection.js';
-const { Journey } = connection.models;
+const { Journey, Station } = connection.models;
 
 interface IJourney {
 	JID: number,
@@ -20,7 +20,19 @@ const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 
 		// @TODO: replace hard limit with backend pagination
-		let journeys: IJourney[] = await Journey?.findAll({ limit: 500 });
+		let journeys: IJourney[] = await Journey?.findAll({
+			limit: 500,
+			include: [
+				{
+					as: 'departure_station',
+					model: Station,
+				},
+				{
+					as: 'return_station',
+					model: Station,
+				}
+			]
+		});
 		return res.status(200).json({
 			data: journeys,
 		});
@@ -49,7 +61,17 @@ const getJourney = async (req: Request, res: Response, next: NextFunction) => {
 		let journey: IJourney = await Journey?.findOne({
 			where: {
 				JID: id,
-			}
+			},
+			include: [
+				{
+					as: 'departure_station',
+					model: Station,
+				},
+				{
+					as: 'return_station',
+					model: Station,
+				}
+			]
 		});
 		return res.status(200).json({
 			data: journey,
