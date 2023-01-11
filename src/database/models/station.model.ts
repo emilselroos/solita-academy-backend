@@ -1,4 +1,5 @@
-import { Table, Model, Column, DataType } from 'sequelize-typescript';
+import { Table, Model, Column, DataType, HasMany } from 'sequelize-typescript';
+import { Journey } from './journey.model.js';
 
 @Table({
     tableName: 'stations',
@@ -13,6 +14,14 @@ export class Station extends Model {
         allowNull: false,
     })
     SID!: number;
+
+	@Column({
+        type: DataType.INTEGER,
+		unique: true,
+        allowNull: true,
+		defaultValue: null,
+    })
+    station_number!: number;
 
     @Column({
         type: DataType.STRING,
@@ -49,5 +58,19 @@ export class Station extends Model {
         allowNull: false,
     })
     y!: number;
+
+	// Relations
+
+	@HasMany(() => Journey,  {
+		foreignKey: 'departure_station_id',
+		onDelete: 'CASCADE'
+	})
+    departure_journeys: Journey[];
+
+    @HasMany(() => Journey, {
+		foreignKey: 'return_station_id',
+		onDelete: 'CASCADE'
+	})
+    return_journeys: Journey[];
 
 }

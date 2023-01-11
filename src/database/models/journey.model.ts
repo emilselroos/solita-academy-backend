@@ -30,12 +30,20 @@ export class Journey extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+		references: {
+            model: 'stations',
+            key: 'station_number'
+        },
     })
     departure_station_id!: number;
 
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+		references: {
+            model: 'stations',
+            key: 'station_number'
+        },
     })
     return_station_id!: number;
 
@@ -53,10 +61,16 @@ export class Journey extends Model {
 
     // Relations
 
-    @BelongsTo(() => Station, 'departure_station_id')
+    @BelongsTo(() => Station,  {
+		foreignKey: 'departure_station_id',
+		onDelete: 'CASCADE'
+	})
     departure_station: Station;
 
-    @BelongsTo(() => Station, 'return_station_id')
+    @BelongsTo(() => Station, {
+		foreignKey: 'return_station_id',
+		onDelete: 'CASCADE'
+	})
     return_station: Station;
 
 }

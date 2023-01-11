@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import _ from 'lodash';
 import csv from 'csv-parser';
+import { QueryTypes } from 'sequelize';
 import connection from './connection.js';
 
 const { Station, Journey } = connection.models;
@@ -42,7 +43,7 @@ const fetchStations = async () => {
 	var newRecords: number = 0;
 
 	console.log(`[Migration] Migrating stations data...`);
-	
+
 	await new Promise((resolve, reject) => {
 		fs.createReadStream('src/data/stations.csv')
 			.pipe(csv({
@@ -52,25 +53,26 @@ const fetchStations = async () => {
 			.on('data', (data: StationRecord) => records.push(data))
 			.on('end', () => {
 				records.forEach(async (row: StationRecord, key: number) => {
-
-					await Station?.findOrCreate({
+					const station = await Station?.findOne({
 						where: {
 							SID: row.id
-						},
-						defaults: {
-							SID: row.id,
+						}
+					});
+
+					if (!station) {
+						newRecords = newRecords + 1;
+						await Station?.build({
+							station_number: row.id,
 							name: row.name,
 							address: row.address,
 							city: row.kaupunki,
 							capasity: row.kapasiteetti,
 							x: row.x,
 							y: row.y
-						}
-					}).then(([ station, created ]) => {
-						if (created) newRecords = newRecords + 1;
-					}).catch((error) => {
-						console.log(`[Migration] Error when migrating stations: `, error);
-					});
+						}).save().catch((error) => {
+							console.log(`[Migration] Error when migrating stations: `, error);
+						});
+					}
 
 					// On last row, let's print out statistics.
 					if (Object.is(records.length - 1, key)) {
@@ -78,7 +80,6 @@ const fetchStations = async () => {
 						console.log(`[Migration] ${newRecords} new stations added.`);
 						resolve('done');
 					}
-
 				});
 			})
 			.on('error', (error: any) => (console.error(error), reject(error)));
@@ -94,14 +95,14 @@ const fetchJourneys = async () => {
 
 	const headers: Array<string> = [ 'departure_time', 'return_time', 'departure_station_id', 'departure_station_name', 'return_station_id', 'return_station_name', 'distance', 'duration' ];
 	const records: JourneyRecord[] = [];
-	const streams = [
+	const streams: Array<string> = [
 		'src/data/journeys_2021_05.csv',
 		'src/data/journeys_2021_06.csv',
 		'src/data/journeys_2021_07.csv'
 	];
 
 	console.log(`[Migration] Migrating journeys data...`);
-	
+
 	const handleJourneysFile = (file: string) => {
 		console.log(`[Migration] Starting to process file ${file}`);
 		return new Promise((resolve, reject) => {
