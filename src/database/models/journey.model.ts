@@ -57,8 +57,7 @@ export class Journey extends Model {
 				msg: `You have to set a proper station number for departure station.`
 			},
 			isInt: {
-				msg: `Station number must be a number!`,
-				args: true
+				msg: `Station number must be a number!`
 			}
 		}
     })
@@ -76,8 +75,7 @@ export class Journey extends Model {
 				msg: `You have to set a proper station number for return station.`
 			},
 			isInt: {
-				msg: `Station number must be a number!`,
-				args: true
+				msg: `Station number must be a number!`
 			}
 		}
     })

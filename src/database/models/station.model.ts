@@ -71,8 +71,7 @@ export class Station extends Model {
 				msg: `Station must have a capasity!`
 			},
 			isInt: {
-				msg: `Capasity has to be a number!`,
-				args: true
+				msg: `Capasity has to be a number!`
 			}
 		}
     })
@@ -86,8 +85,7 @@ export class Station extends Model {
 				msg: `Station must have coordinates!`
 			},
 			isFloat: {
-				msg: `X has to be a floating number!`,
-				args: true
+				msg: `X has to be a floating number!`
 			}
 		}
     })
@@ -101,8 +99,7 @@ export class Station extends Model {
 				msg: `Station must have coordinates!`
 			},
 			isFloat: {
-				msg: `Y has to be a floating number!`,
-				args: true
+				msg: `Y has to be a floating number!`
 			}
 		}
     })
