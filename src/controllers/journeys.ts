@@ -1,17 +1,7 @@
 import { ValidationError } from 'sequelize';
 import { Request, Response, NextFunction } from 'express';
-import connection from '../database/connection.js';
-const { Journey, Station } = connection.models;
-
-interface IJourney {
-	JID: number,
-	departure_time: number,
-	return_time: number,
-	departure_station_id: number,
-	return_station_id: number,
-	distance: number,
-	duration: number
-}
+import { Journey, JourneyAttributes } from '../database/models/journey.model.js';
+import { Station } from '../database/models/station.model.js';
 
 /*
  * get all journeys
@@ -20,7 +10,7 @@ const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 
 		// @TODO: replace hard limit with backend pagination
-		let journeys: IJourney[] = await Journey?.findAll({
+		let journeys: JourneyAttributes[] | null | [] = await Journey?.findAll({
 			limit: 500,
 			include: [
 				{
@@ -32,7 +22,7 @@ const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
 					model: Station,
 				}
 			]
-		});
+		}) ?? [];
 		return res.status(200).json({
 			data: journeys,
 		});
@@ -57,8 +47,8 @@ const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
 const getJourney = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 
-		let id: string = req.params.id;
-		let journey: IJourney = await Journey?.findOne({
+		let id: string | undefined = req.params.id;
+		let journey: JourneyAttributes | null = await Journey?.findOne({
 			where: {
 				JID: id,
 			},
@@ -72,7 +62,7 @@ const getJourney = async (req: Request, res: Response, next: NextFunction) => {
 					model: Station,
 				}
 			]
-		});
+		}) ?? null;
 		return res.status(200).json({
 			data: journey,
 		});
@@ -97,7 +87,7 @@ const createJourney = async (req: Request, res: Response, next: NextFunction) =>
 	try {
 
 		let data = req.body;
-		let newJourney: IJourney = await Journey?.create(data);
+		let newJourney: JourneyAttributes = await Journey?.create(data);
 		res.status(200).json({
 			data: newJourney,
 		});

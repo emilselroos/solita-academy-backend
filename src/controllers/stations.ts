@@ -1,18 +1,7 @@
 import { ValidationError } from 'sequelize';
 import { Request, Response, NextFunction } from 'express';
-import connection from '../database/connection.js';
-const { Station, Journey } = connection.models;
-
-interface IStation {
-	SID: number,
-	station_number: number,
-	name: string,
-	address: string,
-	city: string,
-	capasity: number,
-	x: number,
-	y: number
-}
+import { Station, StationAttributes } from '../database/models/station.model.js';
+import { Journey } from '../database/models/journey.model.js';
 
 /*
  * get all stations
@@ -20,7 +9,7 @@ interface IStation {
 const getStations = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 
-		let stations: IStation[] | []= await Station?.findAll() || [];
+		let stations: StationAttributes[] | null | [] = await Station?.findAll() ?? [];
 		return res.status(200).json({
 			data: stations,
 		});
@@ -44,8 +33,8 @@ const getStations = async (req: Request, res: Response, next: NextFunction) => {
 const getStation = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 
-		let id: string = req.params.id || '';
-		let station: IStation = await Station?.findOne({
+		let id: string = req.params.id ?? '';
+		let station: StationAttributes | null = await Station?.findOne({
 			where: {
 				SID: id,
 			},
@@ -61,7 +50,7 @@ const getStation = async (req: Request, res: Response, next: NextFunction) => {
 					limit: 10,
 				}
 			]
-		});
+		}) ?? null;
 		return res.status(200).json({
 			data: station,
 		});
@@ -86,7 +75,7 @@ const createStation = async (req: Request, res: Response, next: NextFunction) =>
 	try {
 
 		let data = req.body;
-		let newStation: IStation = await Station?.create(data);
+		let newStation: StationAttributes = await Station?.create(data);
 		res.status(200).json({
 			data: newStation,
 		});

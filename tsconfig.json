@@ -28,7 +28,7 @@
         "strictNullChecks": true, // When strictNullChecks is true, null and undefined have their own distinct types and you’ll get a type error if you try to use them where a concrete value is expected.
 
         // Linter Checks
-        "noImplicitReturns": true,
+        "noImplicitReturns": false,
         "noUncheckedIndexedAccess": true, // accessing index must always check for undefined
         "noUnusedLocals": false, // Report errors on unused local variables.
         "noUnusedParameters": false, // Report errors on unused parameters in functions

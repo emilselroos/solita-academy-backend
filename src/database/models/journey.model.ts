@@ -1,11 +1,21 @@
 import { Table, Model, Column, DataType, BelongsTo } from 'sequelize-typescript';
 import { Station } from './station.model.js';
 
+export interface JourneyAttributes {
+	JID: number,
+	departure_time: Date,
+	return_time: Date,
+	departure_station_id: number,
+	return_station_id: number,
+	distance: number,
+	duration: number
+}
+
 @Table({
     tableName: 'journeys',
     timestamps: false,
 })
-export class Journey extends Model {
+export class Journey extends Model<JourneyAttributes> {
 
     @Column({
         type: DataType.INTEGER,

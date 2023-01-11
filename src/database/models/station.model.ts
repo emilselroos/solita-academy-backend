@@ -1,11 +1,23 @@
 import { Table, Model, Column, DataType, HasMany } from 'sequelize-typescript';
 import { Journey } from './journey.model.js';
 
+export interface StationAttributes {
+	SID: number,
+	station_number: number,
+	name: string,
+	address: string,
+	city: string,
+	capasity: number,
+	x: number,
+	y: number
+}
+
+
 @Table({
     tableName: 'stations',
     timestamps: false,
 })
-export class Station extends Model {
+export class Station extends Model<StationAttributes> {
 
     @Column({
         type: DataType.INTEGER,
