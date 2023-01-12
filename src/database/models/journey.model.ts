@@ -1,132 +1,136 @@
-import { Table, Model, Column, DataType, BelongsTo } from 'sequelize-typescript';
+import {
+	Table,
+	Model,
+	Column,
+	DataType,
+	BelongsTo,
+} from 'sequelize-typescript';
 import { Station } from './station.model.js';
 
 export interface JourneyAttributes {
-	JID: number,
-	departure_time: Date,
-	return_time: Date,
-	departure_station_id: number,
-	return_station_id: number,
-	distance: number,
-	duration: number
+	JID: number;
+	departure_time: Date;
+	return_time: Date;
+	departure_station_id: number;
+	return_station_id: number;
+	distance: number;
+	duration: number;
 }
 
 @Table({
-    tableName: 'journeys',
-    timestamps: false,
+	tableName: 'journeys',
+	timestamps: false,
 })
 export class Journey extends Model<JourneyAttributes> {
+	@Column({
+		type: DataType.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
+		allowNull: false,
+	})
+	JID!: number;
 
-    @Column({
-        type: DataType.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-    })
-    JID!: number;
-
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
+	@Column({
+		type: DataType.DATE,
+		allowNull: false,
 		validate: {
 			notNull: {
-				msg: `Departure time can't be null.`
+				msg: `Departure time can't be null.`,
 			},
 			isDate: {
 				msg: `Departure Time has to be date.`,
-				args: true
-			}
-		}
-    })
-    departure_time!: Date;
+				args: true,
+			},
+		},
+	})
+	departure_time!: Date;
 
-    @Column({
-        type: DataType.DATE,
-        allowNull: false,
+	@Column({
+		type: DataType.DATE,
+		allowNull: false,
 		validate: {
 			notNull: {
-				msg: `Return time can't be null.`
+				msg: `Return time can't be null.`,
 			},
 			isDate: {
 				msg: `Return Time has to be date.`,
-				args: true
-			}
-		}
-    })
-    return_time!: Date;
+				args: true,
+			},
+		},
+	})
+	return_time!: Date;
 
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false,
 		references: {
-            model: 'stations',
-            key: 'station_number'
-        },
+			model: 'stations',
+			key: 'station_number',
+		},
 		validate: {
 			notNull: {
-				msg: `You have to set a proper station number for departure station.`
+				msg: `You have to set a proper station number for departure station.`,
 			},
 			isInt: {
-				msg: `Station number must be a number!`
-			}
-		}
-    })
-    departure_station_id!: number;
+				msg: `Station number must be a number!`,
+			},
+		},
+	})
+	departure_station_id!: number;
 
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
+	@Column({
+		type: DataType.INTEGER,
+		allowNull: false,
 		references: {
-            model: 'stations',
-            key: 'station_number'
-        },
+			model: 'stations',
+			key: 'station_number',
+		},
 		validate: {
 			notNull: {
-				msg: `You have to set a proper station number for return station.`
+				msg: `You have to set a proper station number for return station.`,
 			},
 			isInt: {
-				msg: `Station number must be a number!`
-			}
-		}
-    })
-    return_station_id!: number;
+				msg: `Station number must be a number!`,
+			},
+		},
+	})
+	return_station_id!: number;
 
-    @Column({
-        type: DataType.FLOAT,
-        allowNull: false,
+	@Column({
+		type: DataType.FLOAT,
+		allowNull: false,
 		validate: {
 			notNull: {
-				msg: `Distance can't be null.`
-			}
-		}
-    })
-    distance!: number;
+				msg: `Distance can't be null.`,
+			},
+		},
+	})
+	distance!: number;
 
-    @Column({
-        type: DataType.FLOAT,
-        allowNull: false,
+	@Column({
+		type: DataType.FLOAT,
+		allowNull: false,
 		validate: {
 			notNull: {
-				msg: `Duration can't be null.`
-			}
-		}
-    })
-    duration!: number;
+				msg: `Duration can't be null.`,
+			},
+		},
+	})
+	duration!: number;
 
-    // Relations
+	// Relations
 
-    @BelongsTo(() => Station,  {
+	@BelongsTo(() => Station, {
 		as: 'departure_station',
 		foreignKey: 'departure_station_id',
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
 	})
-    departure_station: Station;
+	departure_station: Station;
 
-    @BelongsTo(() => Station, {
+	@BelongsTo(() => Station, {
 		as: 'return_station',
 		foreignKey: 'return_station_id',
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
 	})
-    return_station: Station;
-
+	return_station: Station;
 }
