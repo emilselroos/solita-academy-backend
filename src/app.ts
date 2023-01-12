@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const PORT = process.env.PORT;
 
 app.use(helmet());
 app.use(express.json());
+app.use(cors());
 
 app.get('/test', (req: Request, res: Response) => {
 	res.status(200).send(`OK!`);
