@@ -8,6 +8,29 @@ import { Journey } from '../database/models/journey.model.js';
 import connection from '../database/connection.js';
 
 /*
+ * get stations count
+ */
+const getCount = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const stationsCount: number = await Station?.count();
+		return res.status(200).json({
+			data: {
+				count: stationsCount,
+			},
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({
+			data: null,
+			error: {
+				message:
+					"Something went wrong, and we don't know what exactly.",
+			},
+		});
+	}
+};
+
+/*
  * get all stations
  */
 const getStations = async (req: Request, res: Response, next: NextFunction) => {
@@ -164,4 +187,4 @@ const createStation = async (
 	}
 };
 
-export default { getStations, getStation, createStation };
+export default { getCount, getStations, getStation, createStation };

@@ -7,6 +7,29 @@ import {
 import { Station } from '../database/models/station.model.js';
 
 /*
+ * get journeys count
+ */
+const getCount = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const journeysCount: number = await Journey?.count();
+		return res.status(200).json({
+			data: {
+				count: journeysCount,
+			},
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({
+			data: null,
+			error: {
+				message:
+					"Something went wrong, and we don't know what exactly.",
+			},
+		});
+	}
+};
+
+/*
  * get all journeys
  */
 const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
@@ -113,4 +136,4 @@ const createJourney = async (
 	}
 };
 
-export default { getJourneys, getJourney, createJourney };
+export default { getCount, getJourneys, getJourney, createJourney };
