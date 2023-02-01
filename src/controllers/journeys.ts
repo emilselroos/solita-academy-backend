@@ -77,7 +77,6 @@ const getJourney = async (req: Request, res: Response) => {
 				},
 				include: ['departure_station', 'return_station'],
 			})) ?? null;
-		console.log(journey);
 		return res.status(200).json({
 			data: journey,
 		});

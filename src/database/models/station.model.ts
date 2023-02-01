@@ -1,11 +1,4 @@
-import {
-	Table,
-	Model,
-	Column,
-	DataType,
-	HasMany,
-	HasOne,
-} from 'sequelize-typescript';
+import { Table, Model, Column, DataType, HasMany } from 'sequelize-typescript';
 import { Journey } from './journey.model.js';
 
 export interface StationAttributes {
