@@ -75,17 +75,9 @@ const getJourney = async (req: Request, res: Response, next: NextFunction) => {
 				where: {
 					JID: id,
 				},
-				include: [
-					{
-						as: 'departure_station',
-						model: Station,
-					},
-					{
-						as: 'return_station',
-						model: Station,
-					},
-				],
+				include: ['departure_station', 'return_station'],
 			})) ?? null;
+		console.log(journey);
 		return res.status(200).json({
 			data: journey,
 		});

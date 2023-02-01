@@ -1,4 +1,11 @@
-import { Table, Model, Column, DataType, HasMany } from 'sequelize-typescript';
+import {
+	Table,
+	Model,
+	Column,
+	DataType,
+	HasMany,
+	HasOne,
+} from 'sequelize-typescript';
 import { Journey } from './journey.model.js';
 
 export interface StationAttributes {
@@ -119,6 +126,7 @@ export class Station extends Model<StationAttributes> {
 
 	@HasMany(() => Journey, {
 		as: 'departure_journeys',
+		sourceKey: 'station_number',
 		foreignKey: 'departure_station_id',
 		onDelete: 'CASCADE',
 	})
@@ -126,6 +134,7 @@ export class Station extends Model<StationAttributes> {
 
 	@HasMany(() => Journey, {
 		as: 'return_journeys',
+		sourceKey: 'station_number',
 		foreignKey: 'return_station_id',
 		onDelete: 'CASCADE',
 	})

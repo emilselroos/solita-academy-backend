@@ -63,10 +63,6 @@ export class Journey extends Model<JourneyAttributes> {
 	@Column({
 		type: DataType.INTEGER,
 		allowNull: false,
-		references: {
-			model: 'stations',
-			key: 'station_number',
-		},
 		validate: {
 			notNull: {
 				msg: `You have to set a proper station number for departure station.`,
@@ -81,10 +77,6 @@ export class Journey extends Model<JourneyAttributes> {
 	@Column({
 		type: DataType.INTEGER,
 		allowNull: false,
-		references: {
-			model: 'stations',
-			key: 'station_number',
-		},
 		validate: {
 			notNull: {
 				msg: `You have to set a proper station number for return station.`,
@@ -122,6 +114,7 @@ export class Journey extends Model<JourneyAttributes> {
 
 	@BelongsTo(() => Station, {
 		as: 'departure_station',
+		targetKey: 'station_number',
 		foreignKey: 'departure_station_id',
 		onDelete: 'CASCADE',
 	})
@@ -129,6 +122,7 @@ export class Journey extends Model<JourneyAttributes> {
 
 	@BelongsTo(() => Station, {
 		as: 'return_station',
+		targetKey: 'station_number',
 		foreignKey: 'return_station_id',
 		onDelete: 'CASCADE',
 	})

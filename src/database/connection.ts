@@ -18,7 +18,7 @@ const connection = new Sequelize({
 	username: DB_USER,
 	password: DB_PASSWORD,
 	// Models
-	models: [Station, Journey],
+	models: [Station, Journey], // __dirname + '/**/*.model.ts'
 	// Settings
 	logging: false,
 	pool: {

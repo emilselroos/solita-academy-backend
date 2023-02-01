@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import _ from 'lodash';
 import csv from 'csv-parser';
-import { QueryTypes } from 'sequelize';
 import connection from './connection.js';
 
 const { Station, Journey } = connection.models;
@@ -79,7 +78,7 @@ const fetchStations = async () => {
 						await Station?.build({
 							station_number: row.id,
 							name: row.name,
-							address: row.address,
+							address: row.osoite,
 							city: row.kaupunki,
 							capasity: row.kapasiteetti,
 							x: row.x,
