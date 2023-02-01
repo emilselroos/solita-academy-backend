@@ -1,5 +1,5 @@
 import { ValidationError } from 'sequelize';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import {
 	Journey,
 	JourneyAttributes,
@@ -9,7 +9,7 @@ import { Station } from '../database/models/station.model.js';
 /*
  * get journeys count
  */
-const getCount = async (req: Request, res: Response, next: NextFunction) => {
+const getCount = async (req: Request, res: Response) => {
 	try {
 		const journeysCount: number = await Journey?.count();
 		return res.status(200).json({
@@ -32,7 +32,7 @@ const getCount = async (req: Request, res: Response, next: NextFunction) => {
 /*
  * get all journeys
  */
-const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
+const getJourneys = async (req: Request, res: Response) => {
 	try {
 		// @TODO: replace hard limit with backend pagination
 		const journeys: JourneyAttributes[] | null | [] =
@@ -67,7 +67,7 @@ const getJourneys = async (req: Request, res: Response, next: NextFunction) => {
 /*
  * get single journey
  */
-const getJourney = async (req: Request, res: Response, next: NextFunction) => {
+const getJourney = async (req: Request, res: Response) => {
 	try {
 		const id: string | undefined = req.params.id;
 		const journey: JourneyAttributes | null =
@@ -96,11 +96,7 @@ const getJourney = async (req: Request, res: Response, next: NextFunction) => {
 /*
  * create a new journey
  */
-const createJourney = async (
-	req: Request,
-	res: Response,
-	next: NextFunction,
-) => {
+const createJourney = async (req: Request, res: Response) => {
 	try {
 		const data = req.body;
 		const newJourney: JourneyAttributes = await Journey?.create(data);
