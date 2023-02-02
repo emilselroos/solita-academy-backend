@@ -33,6 +33,9 @@ export class Station extends Model<StationAttributes> {
 			notNull: {
 				msg: `Station must have a station number!`,
 			},
+			isInt: {
+				msg: `Station number must be a number!`,
+			},
 		},
 	})
 	station_number!: number;
@@ -70,6 +73,12 @@ export class Station extends Model<StationAttributes> {
 	@Column({
 		type: DataType.STRING,
 		allowNull: true,
+		validate: {
+			len: {
+				msg: `City name must be 2 - 240 characters long. `,
+				args: [2, 240],
+			},
+		},
 	})
 	city: string;
 

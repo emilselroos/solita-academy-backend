@@ -95,6 +95,9 @@ export class Journey extends Model<JourneyAttributes> {
 			notNull: {
 				msg: `Distance can't be null.`,
 			},
+			isInt: {
+				msg: `Distance must be a number!`,
+			},
 		},
 	})
 	distance!: number;
@@ -105,6 +108,9 @@ export class Journey extends Model<JourneyAttributes> {
 		validate: {
 			notNull: {
 				msg: `Duration can't be null.`,
+			},
+			isInt: {
+				msg: `Duration must be a number!`,
 			},
 		},
 	})
