@@ -3,3 +3,6 @@ lib
 package-lock.json
 .env
 .DS_Store
+cypress/downloads
+cypress/videos
+cypress/screenshots

@@ -39,7 +39,7 @@ const getCount = async (req: Request, res: Response) => {
  */
 const getJourneys = async (req: Request, res: Response) => {
 	try {
-		console.log(req.query);
+		// console.log(req.query);
 		const pageNumber: number = parseInt(req.query.page as string)
 			? parseInt(req.query.page as string)
 			: 0;
