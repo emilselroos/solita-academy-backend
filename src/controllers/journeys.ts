@@ -6,6 +6,11 @@ import {
 } from '../database/models/journey.model.js';
 import { Station } from '../database/models/station.model.js';
 
+interface ResultsAndCount {
+	count?: number;
+	rows?: JourneyAttributes[];
+}
+
 /*
  * get journeys count
  */
@@ -34,10 +39,19 @@ const getCount = async (req: Request, res: Response) => {
  */
 const getJourneys = async (req: Request, res: Response) => {
 	try {
-		// @TODO: replace hard limit with backend pagination
-		const journeys: JourneyAttributes[] | null | [] =
-			(await Journey?.findAll({
-				limit: 500,
+		console.log(req.query);
+		const pageNumber: number = parseInt(req.query.page as string)
+			? parseInt(req.query.page as string)
+			: 0;
+		const pageSize: number = parseInt(req.query.limit as string)
+			? parseInt(req.query.limit as string)
+			: 20;
+		const offset: number = pageSize * pageNumber;
+
+		const journeys: ResultsAndCount | null =
+			(await Journey?.findAndCountAll({
+				limit: pageSize,
+				offset: offset,
 				include: [
 					{
 						as: 'departure_station',
@@ -48,9 +62,13 @@ const getJourneys = async (req: Request, res: Response) => {
 						model: Station,
 					},
 				],
-			})) ?? [];
+			})) ?? null;
+
 		return res.status(200).json({
-			data: journeys,
+			data: {
+				journeys: journeys.rows,
+				totalCount: journeys.count,
+			},
 		});
 	} catch (error) {
 		console.error(error);
@@ -116,7 +134,7 @@ const createJourney = async (req: Request, res: Response) => {
 				data: null,
 				error: {
 					message:
-						"Something went wrong, and we don't know what exactly.",
+						"Something went wrong, and we don't know what exactly. Maybe there's no station with such station number?",
 				},
 			});
 		}
